@@ -4,21 +4,21 @@ using Botiga.Services;
 
 namespace Botiga.EndPoints
 {
-    public class CarroDeLaCompra
+    public static class CarroDeLaCompra
     {
         public static void MapProductEndpoints(this WebApplication app, DatabaseConnection dbConn)
         {
             // GET /products
             app.MapGet("/products", () =>
             {
-                List<Model.Product> carrodelacompra = ProductADO.GetAll(dbConn);
+                List<Model.Familia> carrodelacompra = FamiliaADO.GetAll(dbConn);
                 return Results.Ok(carrodelacompra);
             });
 
             // GET Product by id
             app.MapGet("/products/{id}", (Guid id) =>
             {
-                Model.Product carrodelacompra = ProductADO.GetById(dbConn, id);
+                Model.Familia carrodelacompra = FamiliaADO.GetById(dbConn, id);
 
                 return carrodelacompra is not null
                     ? Results.Ok(carrodelacompra)
@@ -40,15 +40,15 @@ namespace Botiga.EndPoints
             // POST /products
             app.MapPost("/products", (ProductRequest req) =>
             {
-                Model.Product carrodelacompra = new Model.Product
+                Model.Familia carrodelacompra = new Model.Familia
                 {
                     Id = Guid.NewGuid(),
                     Code = req.Code,
-                    Name = req.Name,
-                    Price = req.Price
+                    Name = req.Nom,
+                    Price = req.Descripcio
                 };
 
-                ProductADO.Insert(dbConn, carrodelacompra);
+                FamiliaADO.Insert(dbConn, carrodelacompra);
 
                 return Results.Created($"/products/{carrodelacompra.Id}", carrodelacompra);
             });
