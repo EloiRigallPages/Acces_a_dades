@@ -5,21 +5,21 @@ using Botiga.Model;
 
 namespace Botiga.EndPoints;
 
-public static class Endpoints
+public static class CarroDeLaCompra
 {
     public static void MapProductEndpoints(this WebApplication app, DatabaseConnection dbConn)
     {
         // GET /products
         app.MapGet("/products", () =>
         {
-            List<Product> products = ProductADO.GetAll(dbConn);
+            List<Model.Product> products = ProductADO.GetAll(dbConn);
             return Results.Ok(products);
         });
 
         // GET Product by id
         app.MapGet("/products/{id}", (Guid id) =>
         {
-            Product product = ProductADO.GetById(dbConn, id);
+            Model.Product product = ProductADO.GetById(dbConn, id);
 
             return product is not null
                 ? Results.Ok(product)
@@ -41,7 +41,7 @@ public static class Endpoints
         // POST /products
         app.MapPost("/products", (ProductRequest req) =>
         {
-            Product product = new Product
+            Model.Product product = new Model.Product
             {
                 Id = Guid.NewGuid(),
                 Code = req.Code,
