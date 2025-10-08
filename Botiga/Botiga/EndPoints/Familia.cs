@@ -1,56 +1,48 @@
 ﻿using Botiga.Repository;
 using Botiga.Services;
+using Botiga.Model;
 
 namespace Botiga.EndPoints
 {
-    public class Familia
+    public static class EndPointFamilia
     {
-        public static void MapProductEndpoints(this WebApplication app, DatabaseConnection dbConn)
+        public static void MapFamiliaEndpoints(this WebApplication app, DatabaseConnection dbConn)
         {
             // GET /products
-            app.MapGet("/products", () =>
+            app.MapGet("/familia", () =>
             {
-                List<Model.Product> familia = ProductADO.GetAll(dbConn);
+                List<Familia> familia = FamiliaADO.GetAll(dbConn);
                 return Results.Ok(familia);
             });
 
             // GET Product by id
-            app.MapGet("/products/{id}", (Guid id) =>
+            app.MapGet("/familia/{id}", (Guid id) =>
             {
-                Model.Product familia = ProductADO.GetById(dbConn, id);
+                Familia? familia = FamiliaADO.GetById(dbConn, id);
 
                 return familia is not null
                     ? Results.Ok(familia)
-                    : Results.NotFound(new { message = $"Product with Id {id} not found." });
-
-                // if (product is not null)
-                // {
-                //     return Results.Ok(product);
-                // }
-                // else
-                // {
-                //     return Results.NotFound(new { message = $"Product with Id {id} not found." });
-                // }
+                    : Results.NotFound(new { message = $"Familia with Id {id} not found." });
             });
 
 
 
 
             // POST /products
-            app.MapPost("/products", (ProductRequest req) =>
+            app.MapPost("/familia", (FamiliaRequest req) =>
             {
-                Model.Product familia = new Model.Product
+                Familia familia = new Familia
                 {
                     Id = Guid.NewGuid(),
-                    Code = req.Code,
-                    Name = req.Name,
-                    Price = req.Price
+                    Nom = req.Nom,
+                    Descripcio = req.Descripcio
                 };
 
-                ProductADO.Insert(dbConn, familia);
+                FamiliaADO.Insert(dbConn, familia);
 
-                return Results.Created($"/products/{familia.Id}", familia);
+                return Results.Created($"/familia/{familia.Id}", familia);
             });
         }
     }
+    public record FamiliaRequest(string Nom, string Descripcio);  // Com ha de llegir el POST
 }
