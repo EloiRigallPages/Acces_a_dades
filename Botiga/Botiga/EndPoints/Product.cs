@@ -12,14 +12,14 @@ public static class CarroDeLaCompra
         // GET /products
         app.MapGet("/products", () =>
         {
-            List<Model.Product> products = ProductADO.GetAll(dbConn);
+            List<Model.Product> products = FamiliaADO.GetAll(dbConn);
             return Results.Ok(products);
         });
 
         // GET Product by id
         app.MapGet("/products/{id}", (Guid id) =>
         {
-            Model.Product product = ProductADO.GetById(dbConn, id);
+            Model.Product product = FamiliaADO.GetById(dbConn, id);
 
             return product is not null
                 ? Results.Ok(product)
@@ -45,11 +45,11 @@ public static class CarroDeLaCompra
             {
                 Id = Guid.NewGuid(),
                 Code = req.Code,
-                Name = req.Name,
-                Price = req.Price
+                Name = req.Nom,
+                Price = req.Descripcio
             };
 
-            ProductADO.Insert(dbConn,product);
+            FamiliaADO.Insert(dbConn,product);
 
             return Results.Created($"/products/{product.Id}", product);
         });
@@ -58,4 +58,4 @@ public static class CarroDeLaCompra
 
 }
 
-public record ProductRequest(string Code, string Name, decimal Price);  // Com ha de llegir el POST
+public record ProductRequest(string Code, string Nom, decimal Descripcio);  // Com ha de llegir el POST
