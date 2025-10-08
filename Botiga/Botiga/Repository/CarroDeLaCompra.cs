@@ -1,11 +1,10 @@
-﻿using Microsoft.Data.SqlClient;
-using static System.Console;
+﻿using Botiga.Model;
 using Botiga.Services;
-using Botiga.Model;
+using Microsoft.Data.SqlClient;
 
 namespace Botiga.Repository
 {
-    class ProductADO
+    public class CarroDeLaCompra
     {
         public static void Insert(DatabaseConnection dbConn, Product product)
         {
