@@ -6,19 +6,19 @@ namespace Botiga.EndPoints
 {
     public static class CarroDeLaCompra
     {
-        public static void MapProductEndpoints(this WebApplication app, DatabaseConnection dbConn)
+        public static void MapCarroDeLaCompraEndpoints(this WebApplication app, DatabaseConnection dbConn)
         {
             // GET /products
-            app.MapGet("/products", () =>
+            app.MapGet("/CarroDeLaCompra", () =>
             {
-                List<Model.Familia> carrodelacompra = FamiliaADO.GetAll(dbConn);
+                List<Model.CarroDeLaCompra> carrodelacompra = CarroDeLaCompraADO.GetAll(dbConn);
                 return Results.Ok(carrodelacompra);
             });
 
             // GET Product by id
-            app.MapGet("/products/{id}", (Guid id) =>
+            app.MapGet("/CarroDeLaCompra/{id}", (Guid id) =>
             {
-                Model.Familia carrodelacompra = FamiliaADO.GetById(dbConn, id);
+                Model.CarroDeLaCompra carrodelacompra = CarroDeLaCompraADO.GetById(dbConn, id);
 
                 return carrodelacompra is not null
                     ? Results.Ok(carrodelacompra)
@@ -38,19 +38,19 @@ namespace Botiga.EndPoints
 
 
             // POST /products
-            app.MapPost("/products", (ProductRequest req) =>
+            app.MapPost("/CarroDeLaCompra", (CarroDeLaCompraRequest req) =>
             {
-                Model.Familia carrodelacompra = new Model.Familia
+                Model.CarroDeLaCompra carrodelacompra = new Model.CarroDeLaCompra
                 {
                     Id = Guid.NewGuid(),
-                    Code = req.Code,
-                    Name = req.Nom,
-                    Price = req.Descripcio
+                    IdCarro = req.IdCarro,
+                    IdProducte = req.IdProducte,
+                    Quantitat = req.Quantitat
                 };
 
-                FamiliaADO.Insert(dbConn, carrodelacompra);
+                CarroDeLaCompraADO.Insert(dbConn, carrodelacompra);
 
-                return Results.Created($"/products/{carrodelacompra.Id}", carrodelacompra);
+                return Results.Created($"/CarroDeLaCompra/{carrodelacompra.Id}", carrodelacompra);
             });
         }
 
@@ -58,3 +58,4 @@ namespace Botiga.EndPoints
     }
 
 }
+public record CarroDeLaCompraRequest(string IdCarro, string IdProducte, int Quantitat);

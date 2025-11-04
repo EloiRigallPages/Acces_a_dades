@@ -1,56 +1,48 @@
-﻿using Botiga.Repository;
+﻿using Botiga.Model;
+using Botiga.Repository;
 using Botiga.Services;
 
 namespace Botiga.EndPoints
 {
-    public static class Carros
+    namespace Botiga.EndPoints
     {
-        public static void MapProductEndpoints(this WebApplication app, DatabaseConnection dbConn)
+        public static class CarrosEndPoints
         {
-            // GET /products
-            app.MapGet("/products", () =>
+            public static void MapCarrosEndpoints(this WebApplication app, DatabaseConnection dbConn)
             {
-                List<Model.Familia> carros = FamiliaADO.GetAll(dbConn);
-                return Results.Ok(carros);
-            });
-
-            // GET Product by id
-            app.MapGet("/products/{id}", (Guid id) =>
-            {
-                Model.Familia carros = FamiliaADO.GetById(dbConn, id);
-
-                return carros is not null
-                    ? Results.Ok(carros)
-                    : Results.NotFound(new { message = $"Product with Id {id} not found." });
-
-                // if (product is not null)
-                // {
-                //     return Results.Ok(product);
-                // }
-                // else
-                // {
-                //     return Results.NotFound(new { message = $"Product with Id {id} not found." });
-                // }
-            });
-
-
-
-
-            // POST /products
-            app.MapPost("/products", (ProductRequest req) =>
-            {
-                Model.Familia carros = new Model.Familia
+                // GET /Carro
+                app.MapGet("/Carro", () =>
                 {
-                    Id = Guid.NewGuid(),
-                    Code = req.Code,
-                    Name = req.Nom,
-                    Price = req.Descripcio
-                };
+                    List<Carros> carros = CarrosADO.GetAll(dbConn);
+                    return Results.Ok(carros);
+                });
 
-                FamiliaADO.Insert(dbConn, carros);
+                // GET /Carro/{id}
+                app.MapGet("/Carro/{id}", (Guid id) =>
+                {
+                    Carros? carro = CarrosADO.GetById(dbConn, id);
 
-                return Results.Created($"/products/{carros.Id}", carros);
-            });
+                    return carro is not null
+                        ? Results.Ok(carro)
+                        : Results.NotFound(new { message = $"Carro amb Id {id} no trobat." });
+                });
+
+                // POST /Carro
+                app.MapPost("/Carro", (CarrosRequest req) =>
+                {
+                    Carros carro = new Carros
+                    {
+                        Id = Guid.NewGuid(),
+                        Nom = req.Nom
+                    };
+
+                    CarrosADO.Insert(dbConn, carro);
+
+                    return Results.Created($"/Carro/{carro.Id}", carro);
+                });
+            }
         }
+
+        public record CarrosRequest(string Nom);
     }
 }

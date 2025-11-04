@@ -1,20 +1,42 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Botiga.EndPoints;
+using Botiga.EndPoints.Botiga.EndPoints;
 using Botiga.Services;
-using Botiga.EndPoints;
+using Microsoft.Extensions.Configuration;
 
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
 // Configuració
 builder.Configuration
     .SetBasePath(AppContext.BaseDirectory)
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
+// Connexió a la base de dades
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
 DatabaseConnection dbConn = new DatabaseConnection(connectionString);
 
-WebApplication webApp = builder.Build();
+// 👇 Afegim els serveis de Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-// Registra els endpoints en un mètode separat
-webApp.MapProductEndpoints(dbConn);
+var app = builder.Build();
 
-webApp.Run();
+// 👇 Activem Swagger només en desenvolupament (opcional)
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/swagger");
+    return Task.CompletedTask;
+});
+
+// Registra els endpoints
+app.MapProductEndpoints(dbConn);
+app.MapCarrosEndpoints(dbConn);
+app.MapFamiliaEndpoints(dbConn);
+app.MapCarroDeLaCompraEndpoints(dbConn); // si en tens un per al carro de la compra
+
+app.Run();

@@ -6,74 +6,67 @@ namespace Botiga.Repository
 {
     public class CarrosADO
     {
-        public static void Insert(DatabaseConnection dbConn, Familia product)
+        public static void Insert(DatabaseConnection dbConn, Carros carro)
         {
-
             dbConn.Open();
 
-            string sql = @"INSERT INTO Products (Id, Code, Name, Price)
-                        VALUES (@Id, @Code, @Name, @Price)";
+            string sql = @"INSERT INTO Carros (Id, Nom)
+                           VALUES (@Id, @Nom)";
 
             using SqlCommand cmd = new SqlCommand(sql, dbConn.sqlConnection);
-            cmd.Parameters.AddWithValue("@Id", product.Id);
-            cmd.Parameters.AddWithValue("@Code", product.Code);
-            cmd.Parameters.AddWithValue("@Name", product.Name);
-            cmd.Parameters.AddWithValue("@Price", product.Price);
+            cmd.Parameters.AddWithValue("@Id", carro.Id);
+            cmd.Parameters.AddWithValue("@Nom", carro.Nom);
 
             int rows = cmd.ExecuteNonQuery();
             Console.WriteLine($"{rows} fila inserida.");
             dbConn.Close();
         }
 
-        public static List<Familia> GetAll(DatabaseConnection dbConn)
+        public static List<Carros> GetAll(DatabaseConnection dbConn)
         {
-            List<Familia> products = new();
+            List<Carros> carros = new();
 
             dbConn.Open();
-            string sql = "SELECT Id, Code, Name, Price FROM Products";
+            string sql = "SELECT Id, Nom FROM Carros";
 
             using SqlCommand cmd = new SqlCommand(sql, dbConn.sqlConnection);
             using SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
             {
-                products.Add(new Familia
+                carros.Add(new Carros
                 {
                     Id = reader.GetGuid(0),
-                    Code = reader.GetString(1),
-                    Name = reader.GetString(2),
-                    Price = reader.GetDecimal(3)
+                    Nom = reader.GetString(1)
                 });
             }
 
             dbConn.Close();
-            return products;
+            return carros;
         }
 
-        public static Familia? GetById(DatabaseConnection dbConn, Guid id)
+        public static Carros? GetById(DatabaseConnection dbConn, Guid id)
         {
             dbConn.Open();
-            string sql = "SELECT Id, Code, Name, Price FROM Products WHERE Id = @Id";
+            string sql = "SELECT Id, Nom FROM Carros WHERE Id = @Id";
 
             using SqlCommand cmd = new SqlCommand(sql, dbConn.sqlConnection);
             cmd.Parameters.AddWithValue("@Id", id);
 
             using SqlDataReader reader = cmd.ExecuteReader();
-            Familia? product = null;
+            Carros? carro = null;
 
             if (reader.Read())
             {
-                product = new Familia
+                carro = new Carros
                 {
                     Id = reader.GetGuid(0),
-                    Code = reader.GetString(1),
-                    Name = reader.GetString(2),
-                    Price = reader.GetDecimal(3)
+                    Nom = reader.GetString(1)
                 };
             }
 
             dbConn.Close();
-            return product;
+            return carro;
         }
     }
 }
