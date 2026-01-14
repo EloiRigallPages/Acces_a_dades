@@ -1,61 +1,65 @@
-﻿using Botiga.Model;
+﻿using Botiga.DTO;
+using Botiga.Model;
 using Botiga.Repository;
 using Botiga.Services;
+using Botiga.Validators;
+using Botiga.Common;
 
 namespace Botiga.EndPoints
 {
-    public static class CarroDeLaCompra
+    public static class CarroDeLaCompraEndpoints
     {
         public static void MapCarroDeLaCompraEndpoints(this WebApplication app, DatabaseConnection dbConn)
         {
-            // GET /products
+            // GET ALL
             app.MapGet("/CarroDeLaCompra", () =>
             {
-                List<Model.CarroDeLaCompra> carrodelacompra = CarroDeLaCompraADO.GetAll(dbConn);
-                return Results.Ok(carrodelacompra);
+                List<CarroDeLaCompra> items = CarroDeLaCompraADO.GetAll(dbConn);
+                List<CarroDeLaCompraResponse> response = new();
+
+                foreach (var item in items)
+                {
+                    response.Add(CarroDeLaCompraResponse.FromModel(item));
+                }
+
+                return Results.Ok(response);
             });
 
-            // GET Product by id
+            // GET BY ID
             app.MapGet("/CarroDeLaCompra/{id}", (Guid id) =>
             {
-                Model.CarroDeLaCompra carrodelacompra = CarroDeLaCompraADO.GetById(dbConn, id);
+                CarroDeLaCompra? item = CarroDeLaCompraADO.GetById(dbConn, id);
 
-                return carrodelacompra is not null
-                    ? Results.Ok(carrodelacompra)
-                    : Results.NotFound(new { message = $"Product with Id {id} not found." });
-
-                // if (product is not null)
-                // {
-                //     return Results.Ok(product);
-                // }
-                // else
-                // {
-                //     return Results.NotFound(new { message = $"Product with Id {id} not found." });
-                // }
+                return item is not null
+                    ? Results.Ok(CarroDeLaCompraResponse.FromModel(item))
+                    : Results.NotFound(new { message = $"CarroDeLaCompra amb Id {id} no trobat." });
             });
 
-
-
-
-            // POST /products
+            // POST
             app.MapPost("/CarroDeLaCompra", (CarroDeLaCompraRequest req) =>
             {
-                Model.CarroDeLaCompra carrodelacompra = new Model.CarroDeLaCompra
+                Result result = CarroDeLaCompraValidator.Validate(req);
+                if (!result.IsOk)
                 {
-                    Id = Guid.NewGuid(),
-                    IdCarro = req.IdCarro,
-                    IdProducte = req.IdProducte,
-                    Quantitat = req.Quantitat
-                };
+                    return Results.BadRequest(new
+                    {
+                        error = result.ErrorCode,
+                        message = result.ErrorMessage
+                    });
+                }
 
-                CarroDeLaCompraADO.Insert(dbConn, carrodelacompra);
+                Guid id = Guid.NewGuid();
+                CarroDeLaCompra model = req.ToModel(id);
 
-                return Results.Created($"/CarroDeLaCompra/{carrodelacompra.Id}", carrodelacompra);
+                CarroDeLaCompraADO.Insert(dbConn, model);
+
+                return Results.Created(
+                    $"/CarroDeLaCompra/{model.Id}",
+                    CarroDeLaCompraResponse.FromModel(model)
+                );
             });
         }
-
-
     }
-
 }
+
 public record CarroDeLaCompraRequest(Guid IdCarro, Guid IdProducte, int Quantitat);
