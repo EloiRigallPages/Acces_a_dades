@@ -12,13 +12,13 @@ namespace Botiga.Repository
 
             dbConn.Open();
 
-            string sql = @"INSERT INTO CarroDeLaCompra (Id, IdCarro, IdProducte, Quantitat)
-                        VALUES (@Id, @IdCarro, @IdProducte, @Quantitat)";
+            string sql = @"INSERT INTO CarroDeLaCompra (Id, IdCarro, IdProduct, Quantitat)
+                        VALUES (@Id, @IdCarro, @IdProduct, @Quantitat)";
 
             using SqlCommand cmd = new SqlCommand(sql, dbConn.sqlConnection);
             cmd.Parameters.AddWithValue("@Id", CarroDeLaCompra.Id);
             cmd.Parameters.AddWithValue("@IdCarro", CarroDeLaCompra.IdCarro);
-            cmd.Parameters.AddWithValue("@IdProducte", CarroDeLaCompra.IdProducte);
+            cmd.Parameters.AddWithValue("@IdProduct", CarroDeLaCompra.IdProducte);
             cmd.Parameters.AddWithValue("@Quantitat", CarroDeLaCompra.Quantitat);
 
             int rows = cmd.ExecuteNonQuery();
@@ -41,9 +41,9 @@ namespace Botiga.Repository
                 CarroDeLaCompra.Add(new CarroDeLaCompra
                 {
                     Id = reader.GetGuid(0),
-                    IdCarro = reader.GetString(1),
-                    IdProducte = reader.GetString(2),
-                    Quantitat = reader.GetInt32(32)
+                    IdCarro = reader.GetGuid(1),
+                    IdProducte = reader.GetGuid(2),
+                    Quantitat = reader.GetInt32(3)
                 });
             }
 
@@ -67,9 +67,9 @@ namespace Botiga.Repository
                 product = new CarroDeLaCompra
                 {
                     Id = reader.GetGuid(0),
-                    IdCarro = reader.GetString(1),
-                    IdProducte = reader.GetString(2),
-                    Quantitat = reader.GetInt32(32)
+                    IdCarro = reader.GetGuid(1),
+                    IdProducte = reader.GetGuid(2),
+                    Quantitat = reader.GetInt32(3)
                 };
             }
 

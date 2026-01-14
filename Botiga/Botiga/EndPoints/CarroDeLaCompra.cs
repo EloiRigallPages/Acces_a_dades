@@ -58,4 +58,4 @@ namespace Botiga.EndPoints
     }
 
 }
-public record CarroDeLaCompraRequest(string IdCarro, string IdProducte, int Quantitat);
+public record CarroDeLaCompraRequest(Guid IdCarro, Guid IdProducte, int Quantitat);
