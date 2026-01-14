@@ -1,4 +1,5 @@
 ﻿using Botiga.Model;
+using Botiga.EndPoints;
 
 namespace Botiga.DTO
 {
