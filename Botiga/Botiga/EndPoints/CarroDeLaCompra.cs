@@ -12,9 +12,9 @@ namespace Botiga.EndPoints
         public static void MapCarroDeLaCompraEndpoints(this WebApplication app, DatabaseConnection dbConn)
         {
             // GET ALL
-            app.MapGet("/CarroDeLaCompra", () =>
+            app.MapGet("/CarroDeLaCompra/{id}", (Guid id) =>
             {
-                List<CarroDeLaCompra> items = CarroDeLaCompraADO.GetAll(dbConn);
+                List<CarroDeLaCompra> items = CarroDeLaCompraADO.GetAll(dbConn, id);
                 List<CarroDeLaCompraResponse> response = new();
 
                 foreach (var item in items)

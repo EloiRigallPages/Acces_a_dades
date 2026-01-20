@@ -26,14 +26,17 @@ namespace Botiga.Repository
             dbConn.Close();
         }
 
-        public static List<CarroDeLaCompra> GetAll(DatabaseConnection dbConn)
+        public static List<CarroDeLaCompra> GetAll(DatabaseConnection dbConn, Guid id)
         {
             List<CarroDeLaCompra> CarroDeLaCompra = new();
 
             dbConn.Open();
-            string sql = "SELECT Id, IdCarro, IdProduct, Quantitat FROM CarroDeLaCompra";
+            string sql = "SELECT Id, IdCarro, IdProduct, Quantitat FROM CarroDeLaCompra WHERE IdCarro = @Id";
+        
 
             using SqlCommand cmd = new SqlCommand(sql, dbConn.sqlConnection);
+            cmd.Parameters.AddWithValue("@Id", id);
+
             using SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())

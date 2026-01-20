@@ -64,9 +64,13 @@ namespace Botiga.EndPoints
             {
                 Carros? carro = CarrosADO.GetById(dbConn, id);
 
-                return carro is not null
-                    ? Results.Ok(CarrosResponse.FromModel(carro))
-                    : Results.NotFound(new { message = $"Carro amb Id {id} no trobat." });
+                if (carro is null)
+                {
+                    return Results.NotFound(new { message = $"Carro amb Id {id} no trobat." });
+                }
+
+                List<CarroDeLaCompra> ProductesDelCarro = CarroDeLaCompraADO.GetAll(dbConn);
+
             });
 
         }
