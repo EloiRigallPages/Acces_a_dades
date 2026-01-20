@@ -58,6 +58,17 @@ namespace Botiga.EndPoints
                     CarrosResponse.FromModel(carro)
                 );
             });
+
+            // GET /Carro
+            app.MapGet("/Carro/{id}/import", (Guid id) =>
+            {
+                Carros? carro = CarrosADO.GetById(dbConn, id);
+
+                return carro is not null
+                    ? Results.Ok(CarrosResponse.FromModel(carro))
+                    : Results.NotFound(new { message = $"Carro amb Id {id} no trobat." });
+            });
+
         }
     }
 }

@@ -16,4 +16,9 @@
 		
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Classes\Descomptes\" />
+	  <Folder Include="Classes\Factori_Descomptes\" />
+	</ItemGroup>
+
 </Project>

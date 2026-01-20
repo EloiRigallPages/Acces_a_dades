@@ -10,7 +10,7 @@ namespace Botiga.EndPoints
         public static void MapProductEndpoints(this WebApplication app, DatabaseConnection dbConn)
         {
             // GET /Product
-            app.MapGet("/Product", () =>
+            app.MapGet("/Products", () =>
             {
                 List<Product> products = ProductADO.GetAll(dbConn);
                 return Results.Ok(products);

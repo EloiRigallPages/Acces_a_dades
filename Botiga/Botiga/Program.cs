@@ -1,5 +1,4 @@
 ﻿using Botiga.EndPoints;
-using Botiga.EndPoints.Botiga.EndPoints;
 using Botiga.Services;
 using Microsoft.Extensions.Configuration;
 
