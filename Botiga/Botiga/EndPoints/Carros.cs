@@ -4,6 +4,7 @@ using Botiga.Repository;
 using Botiga.Services;
 using Botiga.Validators;
 using Botiga.Common;
+using Botiga.Classes.Factori_Descomptes;
 
 namespace Botiga.EndPoints
 {
@@ -59,7 +60,6 @@ namespace Botiga.EndPoints
                 );
             });
 
-            // GET /Carro
             app.MapGet("/Carro/{id}/import", (Guid id) =>
             {
                 Carros? carro = CarrosADO.GetById(dbConn, id);
@@ -69,7 +69,14 @@ namespace Botiga.EndPoints
                     return Results.NotFound(new { message = $"Carro amb Id {id} no trobat." });
                 }
 
-                List<CarroDeLaCompra> ProductesDelCarro = CarroDeLaCompraADO.GetAll(dbConn);
+                //List<CarroDeLaCompra> ProductesDelCarro = 
+
+                List<CarroDeLaCompra> ProductesCarroCompra = CarroDeLaCompraADO.GetAllProductesCarroDeLaCompra(dbConn, id);
+
+
+                decimal ImportTotal = Utils.CalcularImportTotal.CalcularImportTotalCarro(ProductesCarroCompra);
+
+
 
             });
 

@@ -14,7 +14,7 @@ namespace Botiga.EndPoints
             // GET ALL
             app.MapGet("/CarroDeLaCompra/{id}", (Guid id) =>
             {
-                List<CarroDeLaCompra> items = CarroDeLaCompraADO.GetAll(dbConn, id);
+                List<CarroDeLaCompra> items = CarroDeLaCompraADO.GetAllProductesCarroDeLaCompra(dbConn, id);
                 List<CarroDeLaCompraResponse> response = new();
 
                 foreach (var item in items)

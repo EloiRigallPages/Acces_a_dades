@@ -6,5 +6,6 @@
         public Guid IdCarro { get; set; }
         public Guid IdProducte { get; set; }
         public int Quantitat { get; set; }
+        public decimal Preu {  get; set; }
     }
 }
