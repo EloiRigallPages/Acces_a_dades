@@ -77,6 +77,8 @@ namespace Botiga.EndPoints
                 decimal ImportTotal = Utils.CalcularImportTotal.CalcularImportTotalCarro(ProductesCarroCompra);
 
 
+                IDescompteFactory factory = type switch
+
 
             });
 
