@@ -3,11 +3,11 @@ using Botiga.Model.Interficie;
 
 namespace Botiga.Classes.Factori_Descomptes
 {
-    public class DescomptePremiumFactory : IDescompteFactory
+    public class DescompteEstandardFactory : IDescompteFactory
     {
         public IDescompte CreateDescompte()
         {
-            return new DescomptePremium();
+            return new DescompteEstandard();
         }
     }
 }
