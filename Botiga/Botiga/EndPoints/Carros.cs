@@ -1,10 +1,12 @@
-﻿using Botiga.DTO;
+﻿using Botiga.Classes.Factori_Descomptes;
+using Botiga.Common;
+using Botiga.DTO;
 using Botiga.Model;
+using Botiga.Model.Interficie;
 using Botiga.Repository;
 using Botiga.Services;
+using Botiga.Utils;
 using Botiga.Validators;
-using Botiga.Common;
-using Botiga.Classes.Factori_Descomptes;
 
 namespace Botiga.EndPoints
 {
@@ -60,7 +62,7 @@ namespace Botiga.EndPoints
                 );
             });
 
-            app.MapGet("/Carro/{id}/import", (Guid id) =>
+            app.MapGet("/Carro/{id}/import", (Guid id, string tipusClient) =>
             {
                 Carros? carro = CarrosADO.GetById(dbConn, id);
 
@@ -77,7 +79,30 @@ namespace Botiga.EndPoints
                 decimal ImportTotal = Utils.CalcularImportTotal.CalcularImportTotalCarro(ProductesCarroCompra);
 
 
-                IDescompteFactory factory = type switch
+                //Calcular descompte //crear descompte per determinar
+                IDescompteFactory dteFactory = tipusClient switch
+                {
+                    "Estandard" => new DescompteEstandardFactory(),
+                    "Premium" => new DescomptePremiumFactory(),
+                    _ => throw new ArgumentException("Tipus de client desconegut.")
+                };
+
+                IDescompte descompte = dteFactory.CreateDescompte();
+
+                decimal dte = descompte.CalcularDte(ImportTotal);
+
+                decimal importFinal = ImportTotal - dte;
+
+                //Retornar import, Descompte, Import amb descompte
+
+                //return Results.Ok(importFinal);
+                return Results.Ok(new
+                {
+                    Import = ImportTotal,
+                    Descompte = dte,
+                    ImportFinal = importFinal
+                });
+
 
 
             });
