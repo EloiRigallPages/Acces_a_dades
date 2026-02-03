@@ -37,5 +37,6 @@ app.MapProductEndpoints(dbConn);
 app.MapCarrosEndpoints(dbConn);
 app.MapFamiliaEndpoints(dbConn);
 app.MapCarroDeLaCompraEndpoints(dbConn); // si en tens un per al carro de la compra
+app.MapCompraEndpoints(dbConn);
 
 app.Run();

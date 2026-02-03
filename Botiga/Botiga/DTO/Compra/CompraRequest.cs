@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Botiga.DTO.Compra
 {
-    public record CompraRequest(Guid IdClient, List<LiniaProducte> Productes)
+    public record CompraRequest(Guid IdClient, List<LiniaProducteRequest> Productes)
     {
 
     }
