@@ -26,7 +26,7 @@ namespace Botiga.EndPoints
             });
 
             // GET BY ID
-            app.MapGet("/CarroDeLaCompra/{id}", (Guid id) =>
+            app.MapGet("/CarroDeLaCompraa/{id}", (Guid id) =>
             {
                 CarroDeLaCompra? item = CarroDeLaCompraADO.GetById(dbConn, id);
 
