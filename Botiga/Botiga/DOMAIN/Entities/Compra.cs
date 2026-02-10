@@ -1,18 +1,15 @@
-﻿namespace Botiga.DOMAIN.Entities;
+﻿using Botiga.Domain.Entities;
+using Botiga.DTO.Compras;
+
+namespace Botiga.DOMAIN.Entities;
 
 public class Compra
 {
-    public string Nom { get; set; } = "";
-    public string Descripcio { get; set; } = "";
-    public decimal Preu { get; set; }
-    public int Descompte { get; set; }
-    
+    public Client client { get; set; }
 
-    public Compra(string nom, string descripcio, decimal preu, int descompte)
-    {
-        Nom = nom;
-        Descripcio = descripcio;
-        Preu = preu;
-        Descompte = descompte;
-    }
+    public DateOnly data { get; set; }
+
+    public List<LiniaProducteRequest> Productes { get; set; }
+
+
 }
