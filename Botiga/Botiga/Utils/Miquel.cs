@@ -1,0 +1,3 @@
+﻿/*miquel sincerament no tinc res en contra teu, pero si no fem les coses ben fetes despres no surten com toquen, avans del nadal varem tenir una xerrada
+ * On ens vas preguntar que no anava bé i t'ho varem explicar, ara s'estan commeten els mateixos errors pero no en fas cas, jo he intentat dir-ho
+ * pero no ho vosl escoltar i no vols saber-ne res, m'hes d'una persona t'ha comentat que no hi ha temps per fer tot el que vols fer pero no vols escoltar*/
