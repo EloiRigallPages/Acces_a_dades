@@ -1,5 +1,5 @@
 ﻿using Botiga.Domain.Entities;
-using Botiga.DTO.Compra;
+using Botiga.DOMAIN.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

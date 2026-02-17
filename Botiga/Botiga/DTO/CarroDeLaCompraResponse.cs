@@ -8,4 +8,6 @@ public record CarroDeLaCompraResponse(Guid Id, Guid IdCarro, Guid IdProduct, int
     {
         return new CarroDeLaCompraResponse(c.Id, c.IdCarro, c.IdProducte, c.Quantitat);
     }
+
+
 }

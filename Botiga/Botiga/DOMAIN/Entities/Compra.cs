@@ -1,7 +1,7 @@
-﻿using Botiga.Domain.Entities;
-using Botiga.DTO.Compras;
+﻿using Botiga.DTO.Compras;
 
-namespace Botiga.DOMAIN.Entities;
+namespace Botiga.Domain.Entities;
+
 
 public class Compra
 {

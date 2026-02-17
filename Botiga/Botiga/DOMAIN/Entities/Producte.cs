@@ -5,4 +5,3 @@ public class Producte
     public String Codi { get; set; }
 
 }
-}

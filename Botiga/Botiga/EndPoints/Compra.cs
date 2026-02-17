@@ -1,8 +1,6 @@
 ﻿using Botiga.Common;
-using Botiga.Common;
 using Botiga.Domain.Entities;
 using Botiga.Domain.Validators;
-using Botiga.DOMAIN.Entities;
 using Botiga.DTO.Compras;
 using Botiga.Services;
 
@@ -30,6 +28,8 @@ public static class EndpointsCompra
                     message = result.ErrorMessage
                 });
             }
+
+            //fer obtenir el preu
 
             return Results.Ok(compra);
 

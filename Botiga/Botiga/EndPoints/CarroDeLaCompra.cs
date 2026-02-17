@@ -19,7 +19,7 @@ namespace Botiga.EndPoints
 
                 foreach (var item in items)
                 {
-                    response.Add(CarroDeLaCompraResponse.FromModel(item));
+                    response.Add(CarroDeLaCompraResponse.FromCarroDeLaCompra(item));
                 }
 
                 return Results.Ok(response);
@@ -31,7 +31,7 @@ namespace Botiga.EndPoints
                 CarroDeLaCompra? item = CarroDeLaCompraADO.GetById(dbConn, id);
 
                 return item is not null
-                    ? Results.Ok(CarroDeLaCompraResponse.FromModel(item))
+                    ? Results.Ok(CarroDeLaCompraResponse.FromCarroDeLaCompra(item))
                     : Results.NotFound(new { message = $"CarroDeLaCompra amb Id {id} no trobat." });
             });
 
@@ -55,7 +55,7 @@ namespace Botiga.EndPoints
 
                 return Results.Created(
                     $"/CarroDeLaCompra/{model.Id}",
-                    CarroDeLaCompraResponse.FromModel(model)
+                    CarroDeLaCompraResponse.FromCarroDeLaCompra(model)
                 );
             });
         }

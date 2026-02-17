@@ -1,6 +1,5 @@
 ﻿using Botiga.Common;
-using Botiga.Common;
-using Botiga.DOMAIN.Entities;
+using Botiga.Domain.Entities;
 
 namespace Botiga.Domain.Validators;
 
@@ -29,7 +28,7 @@ public static class CompraValidator
             if (linia.Quantitat <= 0)
                 return Result.Failure("La quantitat ha de ser superior a 0", "QUANTITAT_INVALIDA");
 
-            if (linia.producte == null)
+            if (linia.IdProducte == null)
                 return Result.Failure("El producte no pot ser null", "PRODUCTE_NULL");
         }
 
