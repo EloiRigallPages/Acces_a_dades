@@ -9,7 +9,7 @@ public class Compra
 
     public DateOnly data { get; set; }
 
-    public List<LiniaProducteRequest> Productes { get; set; }
+    public List<LiniaProducte> Productes { get; set; }
 
 
 }

@@ -28,7 +28,7 @@ public static class CompraValidator
             if (linia.Quantitat <= 0)
                 return Result.Failure("La quantitat ha de ser superior a 0", "QUANTITAT_INVALIDA");
 
-            if (linia.IdProducte == null)
+            if (linia.producte.Codi == null)
                 return Result.Failure("El producte no pot ser null", "PRODUCTE_NULL");
         }
 

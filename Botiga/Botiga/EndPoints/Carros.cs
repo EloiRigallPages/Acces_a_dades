@@ -76,7 +76,7 @@ namespace Botiga.EndPoints
                 List<CarroDeLaCompra> ProductesCarroCompra = CarroDeLaCompraADO.GetAllProductesCarroDeLaCompra(dbConn, id);
 
 
-                decimal ImportTotal = Utils.CalcularImportTotal.CalcularImportTotalCarro(ProductesCarroCompra);
+                decimal ImportTotal = CalcularImportTotal.CalcularImportTotalCarro(ProductesCarroCompra);
 
 
                 //Calcular descompte //crear descompte per determinar

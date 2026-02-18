@@ -14,8 +14,11 @@ public record LiniaProducteRequest(Guid IdProducte, int Quantitat)
         Producte producte = new Producte();
         LiniaProducte linia = new LiniaProducte();
 
-        linia.Quantitat = Quantitat;
+        producte.Codi = IdProducte.ToString();
+
         linia.producte = producte;
+        linia.Quantitat = Quantitat;
+
 
         return linia;
     }

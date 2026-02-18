@@ -19,6 +19,8 @@ public static class EndpointsCompra
 
             Compra compra = req.ToCompra();
             Result result = CompraValidator.Validate(compra);
+
+
             // LiniaProducte liniaProducte = req.ToProducte();
             if (!result.IsOk)
             {

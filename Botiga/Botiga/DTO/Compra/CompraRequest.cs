@@ -1,5 +1,4 @@
 ﻿using Botiga.Domain.Entities;
-using Botiga.DOMAIN.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +20,13 @@ public record CompraRequest(Guid IdClient, DateOnly Data, List<LiniaProducteRequ
 
         compraDomain.data = Data;
 
-        List<LiniaProducte> ProductesDomain = new List<LiniaProducte>();
+        List<LiniaProducte> productesDomain = new List<LiniaProducte>();
 
         foreach (LiniaProducteRequest producte in Productes)
         {
-            ProductesDomain.Add(producte.ToProducte());
+            productesDomain.Add(producte.ToProducte());
         }
-        compraDomain.Productes = ProductesDomain;
+        compraDomain.Productes = productesDomain;
 
         return compraDomain;
     }
