@@ -3,6 +3,7 @@ using Botiga.Domain.Entities;
 using Botiga.Domain.Validators;
 using Botiga.DTO.Compras;
 using Botiga.Services;
+using Botiga.Repository;
 
 
 namespace Botiga.EndPoints;
@@ -13,7 +14,7 @@ public static class EndpointsCompra
     {
 
         // POST /compra/CompraRequest fet amb DTO
-        app.MapPost("/compra", (CompraRequest req) =>
+        app.MapPost("/compra", (CompraRequest req, Guid Id) =>
         {
             // Console.WriteLine(req);
 
@@ -31,7 +32,9 @@ public static class EndpointsCompra
                 });
             }
 
-            //fer obtenir el preu
+            
+
+            PreusADO.GetPreus(dbConn, Id);
 
             return Results.Ok(compra);
 
